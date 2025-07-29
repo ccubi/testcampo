@@ -232,16 +232,17 @@ function sendToTelegram(data) {
   const token = "8335374755:AAHnNrJ6BA1GfLqar5piy4FDzs5YMpiWxV8";
   const chatId = "420171707";
 
+  // Usa HTML come parse_mode
   const message = `
-Nuova Prenotazione Campetto:
+<b>Nuova Prenotazione Campetto:</b>
 
-👤 Nome: ${data.name}
-📧 Email: ${data.email}
-📞 Telefono: ${data.phone}
-🗓️ Data: ${data.date}
-🕒 Ora: ${data.time}
-👥 Giocatori: ${data.players}
-✅ Dichiarazione accettata
+👤 <b>Nome:</b> ${data.name}
+📧 <b>Email:</b> ${data.email}
+📞 <b>Telefono:</b> ${data.phone}
+🗓️ <b>Data:</b> ${data.date}
+🕒 <b>Ora:</b> ${data.time}
+👥 <b>Giocatori:</b> ${data.players}
+✅ <b>Dichiarazione accettata</b>
   `;
 
   fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
@@ -251,7 +252,8 @@ Nuova Prenotazione Campetto:
     },
     body: JSON.stringify({
       chat_id: chatId,
-      text: message
+      text: message,
+      parse_mode: "HTML"   // <-- aggiungi questo!
     })
   })
   .then(response => {
@@ -263,6 +265,7 @@ Nuova Prenotazione Campetto:
   })
   .catch(error => console.error("❌ Errore rete Telegram", error));
 }
+
 
 
 	function sendToGoogleSheet(data) {
