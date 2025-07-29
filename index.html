@@ -228,34 +228,42 @@
     document.getElementById("step4").classList.remove("hidden");
   }
 
-  function sendToTelegram(data) {
-    const token = "8335374755:AAHnNrJ6BA1GfLqar5piy4FDzs5YMpiWxV8"; // <-- Inserisci token del tuo bot
-    const chatId = "420171707";   // <-- Inserisci il tuo chat ID
+function sendToTelegram(data) {
+  const token = "8335374755:AAHnNrJ6BA1GfLqar5piy4FDzs5YMpiWxV8";
+  const chatId = "420171707";
 
-    const message = `
-📅 *Nuova Prenotazione Campetto*
+  const message = `
+Nuova Prenotazione Campetto:
 
-👤 *Nome:* ${data.name}
-📧 *Email:* ${data.email}
-📞 *Telefono:* ${data.phone}
-🗓️ *Data:* ${data.date}
-🕒 *Ora:* ${data.time}
-👥 *Giocatori:* ${data.players}
-✅ *Dichiarazione accettata*
-    `;
+👤 Nome: ${data.name}
+📧 Email: ${data.email}
+📞 Telefono: ${data.phone}
+🗓️ Data: ${data.date}
+🕒 Ora: ${data.time}
+👥 Giocatori: ${data.players}
+✅ Dichiarazione accettata
+  `;
 
-    fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-        parse_mode: "Markdown"
-      })
-    });
-  }
+  fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: message
+    })
+  })
+  .then(response => {
+    if (!response.ok) {
+      console.error("❌ Errore Telegram:", response.statusText);
+    } else {
+      console.log("✅ Telegram inviato!");
+    }
+  })
+  .catch(error => console.error("❌ Errore rete Telegram", error));
+}
+
 
 	function sendToGoogleSheet(data) {
   const scriptURL = "https://script.google.com/home/projects/1jxJ-3WhhkhkpgzAlgsUy7yi9r8DFpzxolVUidiYFjWROiGzVjgxIsKZi/edit"; // <-- Sostituisci con il tuo URL Apps Script
